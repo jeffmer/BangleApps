@@ -39,7 +39,6 @@
           {"name":"multiclock.app.js","url":"clock.js"},
           {"name":"big.face.js","url":"big.js"},
           {"name":"ana.face.js","url":"ana.js"},
-          {"name":"digi.face.js","url":"digi.js"},
           {"name":"txt.face.js","url":"txt.js"},
           {"name":"timdat.face.js","url":"timdat.js"},
           {"name":"multiclock.img","url":"multiclock-icon.js","evaluate":true}
