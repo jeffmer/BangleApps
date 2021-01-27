@@ -12,7 +12,7 @@
       g.setColor(CHARGING).drawImage(atob("DhgBHOBzgc4HOP////////////////////3/4HgB4AeAHgB4AeAHgB4AeAHg"),x,y,{scale:0.8});
       x+=16;
     }
-    g.setColor(3);
+    g.setColor(7);
     g.fillRect(x,y+2,x+s-4,y+17);
     g.clearRect(x+2,y+4,x+s-6,y+15);
     g.fillRect(x+s-3,y+9,x+s,y+11);
