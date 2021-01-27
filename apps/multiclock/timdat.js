@@ -12,15 +12,15 @@
           var hr=d[4].substr(0,2);
           lastmin=min;
           g.reset();
-          g.clearRect(0,24,239,239);
+          g.clearRect(0,20,175,175);
           var w=g.getWidth();
-          g.setColor(0xffff);
-          g.setFontVector(80);
-          g.drawString(tm,4+(w-g.stringWidth(tm))/2,64);
-          g.setFontVector(36);
-          g.setColor(0x07ff);
+          g.setColor(7);
+          g.setFontVector(62);
+          g.drawString(tm,4+(w-g.stringWidth(tm))/2,50);
+          g.setFontVector(28);
+          g.setColor(3);
           var dt=d[0]+" "+d[1]+" "+d[2];//+" "+d[3];
-          g.drawString(dt,(w-g.stringWidth(dt))/2,160);
+          g.drawString(dt,(w-g.stringWidth(dt))/2,130);
           g.flip();
         }
 

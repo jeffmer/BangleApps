@@ -1,24 +1,43 @@
 var FACES = [];
+var iface = 0;
 var STOR = require("Storage");
 STOR.list(/\.face\.js$/).forEach(face=>FACES.push(eval(require("Storage").read(face))));
-var lastface = STOR.readJSON("multiclock.json")||{pinned:0};
-var iface = lastface.pinned;
 var face = FACES[iface]();
 var intervalRefSec;
+var ticks = 0;
 
 function stopdraw() {
   if(intervalRefSec) {intervalRefSec=clearInterval(intervalRefSec);}
+  g.clear();
 }
 
 function startdraw() {
-  g.clear();
   g.reset();
-  Bangle.drawWidgets();
   face.init();
-  intervalRefSec = setInterval(face.tick,1000);
+  Bangle.drawWidgets();
+  intervalRefSec = setInterval(()=>{
+    face.tick();
+    ++ticks;
+    if (ticks==0){
+        Bangle.drawWidgets();
+        ticks=0;
+    }
+  },1000);
 }
 
-function setButtons(){
+var SCREENACCESS = {
+  withApp:true,
+  request:function(){
+    this.withApp=false;
+    stopdraw();
+  },
+  release:function(){
+    this.withApp=true;
+    startdraw(); 
+  }
+}; 
+
+function setControl(){
   function newFace(inc){
     var n = FACES.length-1;
     iface+=inc;
@@ -27,43 +46,17 @@ function setButtons(){
     face = FACES[iface]();
     startdraw();
   }
-  function finish(){
-      if (lastface.pinned!=iface){
-          lastface.pinned=iface;
-          STOR.write("multiclock.json",lastface);
-      }
-      Bangle.showLauncher();
-  }
-  setWatch(finish, BTN2, {repeat:false,edge:"falling"});
-  setWatch(newFace.bind(null,1), BTN1, {repeat:true,edge:"rising"});
-  setWatch(newFace.bind(null,-1), BTN3, {repeat:true,edge:"rising"});
+  Bangle.on('swipe',(dir)=>{
+    if (SCREENACCESS.withApp)
+      newFace(dir);
+  });
 }
 
-var SCREENACCESS = {
-      withApp:true,
-      request:function(){
-        this.withApp=false;
-        stopdraw();
-        clearWatch();
-      },
-      release:function(){
-        this.withApp=true;
-        startdraw(); 
-        setButtons();
-      }
-}; 
-
-Bangle.on('lcdPower',function(on) {
-  if (!SCREENACCESS.withApp) return;
-  if (on) {
-    startdraw();
-  } else {
-    stopdraw();
-  }
-});
-
-g.clear();
 Bangle.loadWidgets();
+g.clear();
 startdraw();
-setButtons();
+setControl();
+setWatch(function(){load("magnav.app.js");},BTN1,{edge:"falling"});
+
+
 

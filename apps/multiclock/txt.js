@@ -13,21 +13,24 @@
           return "error";     
       }
       g.reset();
-      g.clearRect(0,40,239,210);
-      g.setColor(1,1,1);
-      g.setFontAlign(0,0);
-      g.setFont("Vector",44);
+      g.clearRect(0,20,175,175);
+      g.setColor(7);
+      g.setFontAlign(0,-1);
+      g.setFont("Vector",32);
       var txt = convert(d.getHours());
-      g.drawString(txt.top,120,60);
-      g.drawString(txt.bot,120,100);
+      g.setColor(3).drawString(txt.top,88,30);
+      g.setColor(7).drawString(txt.bot,88,60);
       txt = convert(d.getMinutes());
-      g.drawString(txt.top,120,140);
-      g.drawString(txt.bot,120,180);
+      g.setColor(3).drawString(txt.top,88,90);
+      g.setColor(7).drawString(txt.bot,88,120);
+      g.flip();
     }
 
   function onSecond(){
      var t = new Date();
-     if (t.getSeconds() === 0) drawTime(t);
+     if (t.getSeconds() === 0) {
+        drawTime(t);
+    }
   }
 
   function drawAll(){
