@@ -4,9 +4,9 @@
   function draw() {
     g.reset();
     if (NRF.getSecurityStatus().connected)
-      g.setColor(0,0.5,1);
+      g.setColor(3);
     else
-      g.setColor(0.3,0.3,0.3);
+      g.setColor(4);
     g.drawImage(img_bt,10+this.x,2+this.y);
   }
   function changed() {
