@@ -188,15 +188,6 @@ var SCREENACCESS = {
         setButtons();
       }
 };
- 
-Bangle.on('lcdPower',function(on) {
-  if (!SCREENACCESS.withApp) return;
-  if (on) {
-    startdraw();
-  } else {
-    stopdraw();
-  }
-});
 
 Bangle.on('kill',()=>{Bangle.setCompassPower(0);});
 

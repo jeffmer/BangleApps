@@ -1,6 +1,3 @@
-Bangle.loadWidgets();
-Bangle.drawWidgets();
-
 const storage = require('Storage');
 let settings;
 
