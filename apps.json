@@ -5,12 +5,25 @@
       "type":"bootloader",
       "icon": "bootloader.png",
       "version":"0.22",
-      "description": "This is needed by Bangle.js to automatically load the clock, menu, widgets and settings",
+      "description": "This is needed to automatically load the clock, menu, widgets and settings",
       "storage": [
         {"name":".boot0","url":"boot0.js"},
         {"name":".bootcde","url":"bootloader.js"}
       ],
       "sortorder" : -10
+    },
+    { "id": "dtlaunch",
+      "name": "Desktop Launcher",
+      "icon": "icon.png",
+      "version":"0.03",
+      "description": "Desktop style App Launcher with four apps per page - fast access if you have lots of apps installed.",
+      "readme": "README.md",
+      "tags": "tool,system,launcher",
+      "type":"launch",
+      "storage": [
+        {"name":"dtlaunch.app.js","url":"app.js"},
+        {"name":"dtlaunch.img","url":"app-icon.js","evaluate":true}
+      ]
     },
     { "id": "setting",
         "name": "Settings",

@@ -1,10 +1,10 @@
 var FACES = [];
-var iface = 0;
 var STOR = require("Storage");
 STOR.list(/\.face\.js$/).forEach(face=>FACES.push(eval(require("Storage").read(face))));
+var lastface = STOR.readJSON("multiclock.json")||{pinned:0};
+var iface = lastface.pinned;
 var face = FACES[iface]();
 var intervalRefSec;
-var ticks = 0;
 
 function stopdraw() {
   if(intervalRefSec) {intervalRefSec=clearInterval(intervalRefSec);}
@@ -12,17 +12,11 @@ function stopdraw() {
 }
 
 function startdraw() {
+  g.clear();
   g.reset();
-  face.init();
   Bangle.drawWidgets();
-  intervalRefSec = setInterval(()=>{
-    face.tick();
-    ++ticks;
-    if (ticks==0){
-        Bangle.drawWidgets();
-        ticks=0;
-    }
-  },1000);
+  face.init();
+  intervalRefSec = setInterval(face.tick,1000);
 }
 
 var SCREENACCESS = {
@@ -46,17 +40,25 @@ function setControl(){
     face = FACES[iface]();
     startdraw();
   }
+  function finish(){
+    if (lastface.pinned!=iface){
+        lastface.pinned=iface;
+        STOR.write("multiclock.json",lastface);
+    }
+    Bangle.showLauncher();
+  }
   Bangle.on('swipe',(dir)=>{
     if (SCREENACCESS.withApp)
       newFace(dir);
   });
+  setWatch(finish,BTN1,{edge:"falling"});
 }
 
 Bangle.loadWidgets();
 g.clear();
 startdraw();
 setControl();
-setWatch(function(){load("magnav.app.js");},BTN1,{edge:"falling"});
+
 
 
 
