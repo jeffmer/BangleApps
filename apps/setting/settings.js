@@ -216,18 +216,18 @@ function showLCDMenu() {
   const lcdMenu = {
     '': { 'title': 'LCD' },
     '< Back': ()=>showMainMenu(),
-    'LCD Brightness': {
+    'LCD Bright': {
       value: settings.brightness,
-      min: 0.1,
+      min: 0,
       max: 1,
-      step: 0.1,
+      step: 1,
       onchange: v => {
         settings.brightness = v || 1;
         updateSettings();
         Bangle.setLCDBrightness(settings.brightness);
       }
     },
-    'LCD Timeout': {
+    'LCD TO': {
       value: settings.timeout,
       min: 0,
       max: 60,
@@ -246,23 +246,7 @@ function showLCDMenu() {
         updateOptions();
       }
     },
-    'Wake on BTN2': {
-      value: settings.options.wakeOnBTN2,
-      format: boolFormat,
-      onchange: () => {
-        settings.options.wakeOnBTN2 = !settings.options.wakeOnBTN2;
-        updateOptions();
-      }
-    },
-    'Wake on BTN3': {
-      value: settings.options.wakeOnBTN3,
-      format: boolFormat,
-      onchange: () => {
-        settings.options.wakeOnBTN3 = !settings.options.wakeOnBTN3;
-        updateOptions();
-      }
-    },
-    'Wake on FaceUp': {
+    'Wake-FaceUp': {
       value: settings.options.wakeOnFaceUp,
       format: boolFormat,
       onchange: () => {
@@ -270,7 +254,7 @@ function showLCDMenu() {
         updateOptions();
       }
     },
-    'Wake on Touch': {
+    'Wake-Touch': {
       value: settings.options.wakeOnTouch,
       format: boolFormat,
       onchange: () => {
@@ -278,7 +262,7 @@ function showLCDMenu() {
         updateOptions();
       }
     },
-    'Wake on Twist': {
+    'Wake -Twist': {
       value: settings.options.wakeOnTwist,
       format: boolFormat,
       onchange: () => {
@@ -286,7 +270,7 @@ function showLCDMenu() {
         updateOptions();
       }
     },
-    'Twist Threshold': {
+    'Twist Thresh': {
       value: internalToG(settings.options.twistThreshold),
       min: -0.5,
       max: 0.5,
