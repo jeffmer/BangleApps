@@ -4,7 +4,7 @@ if (window.location.host=="banglejs.com") {
 } else if (window.location.host=="espruino.github.io") {
   document.title += " [Development]";
   document.getElementById("apploaderlinks").innerHTML =
-    'This is an Espruino App Loader fro an SMAQ3 smartwatch';
+    'This is an Espruino App Loader for an SMAQ3 smartwatch';
 } else {
   document.title += " [Unofficial]";
   document.getElementById("apploaderlinks").innerHTML =

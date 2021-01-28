@@ -29,7 +29,7 @@ function resetSettings() {
     ble: true,             // Bluetooth enabled by default
     blerepl: true,         // Is REPL on Bluetooth - can Espruino IDE be used?
     log: false,            // Do log messages appear on screen?
-    timeout: 10,           // Default LCD timeout in seconds
+    timeout: 0,           // Default LCD timeout in seconds
     vibrate: true,         // Vibration enabled by default. App must support
     beep: "vib",            // Beep enabled by default. App must support
     timezone: 0,           // Set the timezone for the device
@@ -39,9 +39,9 @@ function resetSettings() {
     brightness: 1,       // LCD brightness from 0 to 1
     // welcomed : undefined/true (whether welcome app should show)
     options: {
-      wakeOnBTN1: true,
-      wakeOnBTN2: true,
-      wakeOnBTN3: true,
+      wakeOnBTN1: false,
+      wakeOnBTN2: false,
+      wakeOnBTN3: false,
       wakeOnFaceUp: false,
       wakeOnTouch: false,
       wakeOnTwist: true,
