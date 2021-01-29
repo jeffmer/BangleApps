@@ -32,7 +32,7 @@ if (s.blerepl===false) { // If not programmable, force terminal off Bluetooth
 }
 // we just reset, so BLE should be on.
 // Don't disconnect if something is already connected to us
-//if (s.ble===false && !NRF.getSecurityStatus().connected) NRF.sleep();
+if (s.ble===false && !NRF.getSecurityStatus().connected) NRF.sleep();
 // Set time, vibrate, beep, etc
 if (!Bangle.F_BEEPSET) {
   if (!s.vibrate) Bangle.buzz=Promise.resolve;
