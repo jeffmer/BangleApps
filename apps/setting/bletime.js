@@ -1,4 +1,4 @@
-
+function setTimefromPhone(menu){
 
     function advert(){
         NRF.setAdvertising([
@@ -18,17 +18,9 @@
             gatt:null,
             ctime:null
         };  
-
-
-        //stop advertising when peripheral link disconnected
-        if (!NRF.getGattforCentralServer) 
-        NRF.on('disconnect',function(reason){
-            print("disconnected")
-            advert();
-        });
         
         NRF.on('connect',function(addr){
-            console.log('connect');
+            Terminal.print('connect');
             if(NRF.getGattforCentralServer)
                  do_bond(NRF.getGattforCentralServer(addr));
             else
@@ -47,13 +39,13 @@
             }
             drawIcon(1); //connect from iPhone
             state.gatt.device.on('gattserverdisconnected', function(reason) {
-                console.log('gattserverdisconnected');
+                Terminal.print('gattserverdisconnected');
                 if (ival) clearInterval(ival);
                 if (tval) clearTimeout(tval); 
                 cleanup();
             });
             E.on("kill",function(){
-                console.log("kill disconnect");
+                Terminal.print("kill disconnect");
                 state.gatt.disconnect().then(function(){NRF.sleep();});
             });      
             NRF.setSecurity({passkey:"123456",mitm:1,display:1});
@@ -74,7 +66,7 @@
                     }
                 },1000);
             }).catch(function(e){
-                console.log("ERROR "+e);
+                Terminal.print("ERROR "+e);
             });
         }
         
@@ -120,11 +112,9 @@
         g.setColor(-1);
         g.setFont("Vector",24);
         g.drawString("Setting time",20,100);
-        /*
-        NRF.setServices(undefined,{uart:false});
+        //NRF.setServices(undefined,{uart:false});
         NRF.sleep();
-        NRF.wake();
         setTimeout(()=>{NRF.wake();advert();},1000);
-        */
-
-    
+    }
+        
+    setTimeout(setTimefromPhone,10000);

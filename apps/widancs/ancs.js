@@ -256,8 +256,8 @@
   if (ENABLED && typeof SCREENACCESS!='undefined') {
     stage = 0;
     recent=0;
-    NRF.setServices(undefined,{uart:false});
-    NRF.disconnect();
+    //NRF.setServices(undefined,{uart:false});
+    NRF.sleep();
     setTimeout(()=>{NRF.wake();advert();},1000);
     saveLast(  {ttl:'',msg:'NONE'});
     BANGLE.on('swipe',(d)=>{
