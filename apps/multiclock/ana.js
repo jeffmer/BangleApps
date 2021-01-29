@@ -56,7 +56,7 @@
       }
 
     function drawAll() {
-        g.clearRect(0,20,175,175);
+        g.clearRect(0,24,175,175);
         // draw seconds   
         for (let i=0;i<60;i++)
             seconds(360*i/60, 69);

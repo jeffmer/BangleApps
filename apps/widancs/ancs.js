@@ -51,14 +51,6 @@
   NRF.on('disconnect',function(reason){
       NRF.sleep();
   });
-
-  if (ENABLED && typeof SCREENACCESS!='undefined') 
-  NRF.on('connect',function(addr){
-    if(NRF.getGattforCentralServer)
-      do_bond(NRF.getGattforCentralServer(addr));
-    else
-      NRF.connect(addr).then(do_bond);
-  });
         
   function do_bond(g) {
       var tval, ival;
@@ -97,7 +89,7 @@
             }
         },1000);
       }).catch(function(e){
-        console.log("ERROR "+e);
+        Terminal.print("ERROR "+e);
       });
   }
   
@@ -129,7 +121,7 @@
            });  
       });
     }).catch(function(e){
-        console.log("ERROR "+e);
+        Terminal.print("ERROR "+e);
     });
   }
   
@@ -258,9 +250,18 @@
     recent=0;
     //NRF.setServices(undefined,{uart:false});
     NRF.sleep();
-    setTimeout(()=>{NRF.wake();advert();},1000);
+    setTimeout(()=>{
+       NRF.wake();
+       advert();
+      NRF.on('connect',function(addr){
+        if(NRF.getGattforCentralServer)
+          do_bond(NRF.getGattforCentralServer(addr));
+        else
+          NRF.connect(addr).then(do_bond);
+      });
+    },10000);
     saveLast(  {ttl:'',msg:'NONE'});
-    BANGLE.on('swipe',(d)=>{
+    Bangle.on('swipe',(d)=>{
       if (!SCREENACCESS.withApp && d==-2) {
         g.clear(); SCREENACCESS.release(); 
       } else if (SCREENACCESS.withApp && d==2){

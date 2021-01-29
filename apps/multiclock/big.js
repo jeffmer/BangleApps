@@ -12,8 +12,8 @@
         g.setColor(7);
         g.setFontAlign(0,-1);
         g.setFont("Vector",90);
-        g.drawString(hours,88,20,true);
-        g.drawString(minutes,88,96,true);
+        g.drawString(hours,88,24,true);
+        g.drawString(minutes,88,100,true);
         g.flip();
       }
 

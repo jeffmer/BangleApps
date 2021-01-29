@@ -12,7 +12,7 @@
           var hr=d[4].substr(0,2);
           lastmin=min;
           g.reset();
-          g.clearRect(0,20,175,175);
+          g.clearRect(0,24,175,175);
           var w=g.getWidth();
           g.setColor(7);
           g.setFontVector(62);
