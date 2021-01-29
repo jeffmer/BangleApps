@@ -19,7 +19,7 @@ function startdraw() {
   intervalRefSec = setInterval(face.tick,1000);
 }
 
-var SCREENACCESS = {
+global.SCREENACCESS = {
   withApp:true,
   request:function(){
     this.withApp=false;

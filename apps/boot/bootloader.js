@@ -1,4 +1,5 @@
 // This runs after a 'fresh' boot
+if (!BTN1.read()){
 var clockApp=(require("Storage").readJSON("setting.json",1)||{}).clock;
 if (clockApp) clockApp = require("Storage").read(clockApp);
 if (!clockApp) {
@@ -40,4 +41,5 @@ if ((new Date()).getFullYear()<2000) {
 } else {
   eval(clockApp);
   delete clockApp;
+}
 }
