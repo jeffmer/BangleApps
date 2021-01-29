@@ -8,7 +8,7 @@
         var time = da[4].substr(0, 5).split(":");
         var hours = time[0],
           minutes = time[1];
-        g.clearRect(0,20,175,175);
+        g.clearRect(0,24,175,175);
         g.setColor(7);
         g.setFontAlign(0,-1);
         g.setFont("Vector",90);
