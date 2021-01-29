@@ -70,6 +70,17 @@
         ],
         "data":[{"name":"magnav.json"}]
       },
+      { "id": "files",
+        "name": "App Manager",
+        "icon": "files.png",
+        "version":"0.06",
+        "description": "Show currently installed apps, free space, and allow their deletion from the watch",
+        "tags": "tool,system,files",
+        "storage": [
+          {"name":"files.app.js","url":"files.js"},
+          {"name":"files.img","url":"files-icon.js","evaluate":true}
+        ]
+      },
       { "id": "widbat",
         "name": "Battery Level Widget",
         "icon": "widget.png",
@@ -113,6 +124,20 @@
         "type":"widget",
         "storage": [
           {"name":"widbt.wid.js","url":"widget.js"}
+        ]
+      },
+      { "id": "widancs",
+        "name": "Apple Notification Widget",
+        "shortName":"ANCS Widget",
+        "icon": "widget.png",
+        "version":"0.06",
+        "description": "Displays call, message etc notifications from a paired iPhone. Read README before installation as it only works with compatible apps",
+        "readme": "README.md",
+        "tags": "widget",
+        "type": "widget",
+        "storage": [
+          {"name":"widancs.wid.js","url":"ancs.js"},
+          {"name":"widancs.settings.js","url":"settings.js"}
         ]
       }
 ]

@@ -52,6 +52,11 @@ if (!Bangle.F_BEEPSET) {
 }
 if (s.timeout!==undefined) Bangle.setLCDTimeout(s.timeout);
 if (!s.timeout) Bangle.setLCDPower(1);
+LED1.reset();
+Bangle.on('twist',function(){
+  LED1.set();
+  setTimeout(function(){LED1.reset();},5000);
+});
 E.setTimeZone(s.timezone);
 delete s;
 // Draw out of memory errors onto the screen
