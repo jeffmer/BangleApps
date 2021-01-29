@@ -38,19 +38,18 @@
     var secondDate;
 
     function onSecond() {
-        g.setColor(0);
-        hand(360*secondDate.getSeconds()/60, -5, 64, 3);
-        if (secondDate.getSeconds() === 0) {
+        secondDate = new Date();
+        if (minuteDate && secondDate.getSeconds() != 0) return;
+        if (minuteDate){
+            g.setColor(0);
             hand(360*(minuteDate.getHours() + (minuteDate.getMinutes()/60))/12, -12, 50, 7);
             hand(360*minuteDate.getMinutes()/60, -12, 60, 7);
-            minuteDate = new Date();
         }
-        g.setColor(7);
-        hand(360*(minuteDate.getHours() + (minuteDate.getMinutes()/60))/12, -12, 50, 7);
-        hand(360*minuteDate.getMinutes()/60, -12, 60, 7);
+        minuteDate = secondDate;
         g.setColor(3);
-        secondDate = new Date();
-        hand(360*secondDate.getSeconds()/60, -5, 64, 3);
+        hand(360*(minuteDate.getHours() + (minuteDate.getMinutes()/60))/12, -12, 50, 7);
+        g.setColor(7);
+        hand(360*minuteDate.getMinutes()/60, -12, 60, 7);
         g.setColor(0);
         g.fillCircle(88,98,2);
         g.flip();
@@ -58,7 +57,6 @@
 
     function drawAll() {
         g.clearRect(0,20,175,175);
-        secondDate = minuteDate = new Date();
         // draw seconds   
         for (let i=0;i<60;i++)
             seconds(360*i/60, 69);
