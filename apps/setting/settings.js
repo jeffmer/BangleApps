@@ -1,4 +1,5 @@
 const storage = require('Storage');
+if (storage.read("bletime.js")) eval(storage.read("bletime.js"));
 let settings;
 
 function updateSettings() {
@@ -94,6 +95,13 @@ function showMainMenu() {
         }
       }
     },
+    'Time-iPhone':()=>{
+        if (!setTimefromPhone) return;
+         E.showMenu();
+         setTimeout(()=>{
+            setTimefromPhone(mainmenu);
+         },300);
+     },
     'Locale': ()=>showLocaleMenu(),
     'Select Clock': ()=>showClockMenu(),
     'Set Time': ()=>showSetTimeMenu(),
