@@ -23,9 +23,9 @@ function draw_icon(p,n,selected) {
     var x = 8+(n%2)*80; 
     var y = n>1?93:10;
     (selected?g.setColor(1):g.setColor(0)).fillRect(x,y,x+79,y+82);
-    g.drawImage(s.read(apps[p*6+n].icon),x+10,y+5,{scale:1.25});
+    g.drawImage(s.read(apps[p*4+n].icon),x+10,y+5,{scale:1.25});
     g.setColor(-1).setFontAlign(0,-1,0).setFont("6x8",1);
-    var txt =  apps[p*6+n].name.split(" ");
+    var txt =  apps[p*4+n].name.split(" ");
     for (var i = 0; i < txt.length; i++) {
         txt[i] = txt[i].trim();
         g.drawString(txt[i],x+40,y+63+i*8);
@@ -71,7 +71,7 @@ E.on("touch",(p)=>{
                     if (selected!=i){
                         draw_icon(page,selected,false);
                     } else {
-                      if (D17.read()) reset(); else load(apps[page*6+i].src);
+                      if (D17.read()) reset(); else load(apps[page*4+i].src);
                     }
                 }
                 selected=i;
@@ -79,7 +79,7 @@ E.on("touch",(p)=>{
             }
         }
     }
-    if ((i==6 || (page*4+i)>Napps) && selected>=0) {
+    if ((i==4 || (page*4+i)>Napps) && selected>=0) {
         draw_icon(page,selected,false);
         selected=-1;
     }
