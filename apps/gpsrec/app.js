@@ -1,6 +1,3 @@
-Bangle.loadWidgets();
-Bangle.drawWidgets();
-
 var settings = require("Storage").readJSON("gpsrec.json",1)||{};
 var osm;
 try { // if it's installed, use the OpenStreetMap module
