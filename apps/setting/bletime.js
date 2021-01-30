@@ -18,13 +18,10 @@ function setTimefromPhone(menu){
             gatt:null,
             ctime:null
         };  
-        
+        // do not use  getgatt for central server hack for initial pairing
         NRF.on('connect',function(addr){
-            Terminal.print('connect');
-            if(NRF.getGattforCentralServer)
-                 do_bond(NRF.getGattforCentralServer(addr));
-            else
-                 NRF.connect(addr).then(do_bond);
+            Terminal.print('connect\n');
+            NRF.connect(addr).then(do_bond);
         });
                 
         function do_bond(g) {
@@ -34,18 +31,17 @@ function setTimefromPhone(menu){
                 drawIcon(0); //disconnect from iPhone
                 delete state.gatt;
                 delete state.ancs;
-                if(!NRF.getGattforCentralServer) NRF.disconnect();
-                //setTimeout(()=>{NRF.wake();},500);
+                NRF.disconnect();
             }
             drawIcon(1); //connect from iPhone
             state.gatt.device.on('gattserverdisconnected', function(reason) {
-                Terminal.print('gattserverdisconnected');
+                Terminal.print('gattserverdisconnected\n');
                 if (ival) clearInterval(ival);
                 if (tval) clearTimeout(tval); 
                 cleanup();
             });
             E.on("kill",function(){
-                Terminal.print("kill disconnect");
+                Terminal.print("kill disconnect\n");
                 state.gatt.disconnect().then(function(){NRF.sleep();});
             });      
             NRF.setSecurity({passkey:"123456",mitm:1,display:1});
@@ -56,6 +52,8 @@ function setTimefromPhone(menu){
             state.gatt.startBonding().then(function(){
                 ival = setInterval(function(){
                     var sec = state.gatt.getSecurityStatus();
+                    if (sec.connected) print("sec connected\n");
+                    if (sec.encrypted) print("sec encrypted\n");
                     if (!sec.connected) {clearInterval(ival); clearTimeout(tval); return;}
                     if (sec.connected && sec.encrypted){
                     clearInterval(ival);  

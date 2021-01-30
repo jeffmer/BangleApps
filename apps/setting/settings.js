@@ -95,7 +95,7 @@ function showMainMenu() {
         }
       }
     },
-    'Time-iPhone':()=>{
+    'Pair/setTime-iPhone':()=>{
         if (!setTimefromPhone) return;
          E.showMenu();
          setTimeout(()=>{
