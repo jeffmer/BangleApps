@@ -116,5 +116,4 @@ function setTimefromPhone(menu){
         NRF.sleep();
         setTimeout(()=>{NRF.wake();advert();},1000);
     }
-        
-    setTimeout(setTimefromPhone,10000);
+
