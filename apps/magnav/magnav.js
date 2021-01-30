@@ -142,14 +142,10 @@ function docalibrate(e,first){
     if (first===undefined) first=false;
     stopdraw();
     clearWatch();
-    E.showMessage(msg,title);
-    setTimeout(function(){action(true);},3000);
-    /*
     if (first) 
         E.showAlert(msg,title).then(action.bind(null,true));
     else 
         E.showPrompt(msg,{title:title,buttons:{"Start":true,"Cancel":false}}).then(action);
-    */
 }
 
 E.on('touch', function(b) { 
