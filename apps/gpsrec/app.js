@@ -130,21 +130,21 @@ function viewTrack(n, info) {
   if (info.time)
     menu[info.time.toISOString().substr(0,16).replace("T"," ")] = function(){};
   menu["Duration"] = { value : asTime(info.duration)};
-  menu["Records"] = { value : ""+info.records };
+  menu["Records"] = { value : "("+info.records };
   menu['Plot Map'] = function() {
     info.qOSTM = false;
-    plotTrack(info);
+    setTimeout(function(){plotTrack(info);},500);
   };
   if (osm)
     menu['Plot OpenStMap'] = function() {
       info.qOSTM = true;
-      plotTrack(info);
-    }
+      setTimeout(function(){plotTrack(info);},500);
+    };
   menu['Plot Alt.'] = function() {
-    plotGraph(info, "altitude");
+    setTimeout(function(){plotGraph(info, "altitude");},500);
   };
   menu['Plot Speed'] = function() {
-    plotGraph(info, "speed");
+    setTimeout(function(){plotGraph(info, "speed");},500);
   };
   menu['Erase'] = function() {
     E.showPrompt("Delete Track?").then(function(v) {
@@ -189,12 +189,12 @@ function plotTrack(info) {
   var cy = g.getHeight()/2;
   g.setColor(7);
   g.setFont("Vector",16);
-  g.drawString("Track"+info.fn.toString()+" - Loading",10,156);
+  g.drawString("Track"+info.fn.toString()+" - Loading",6,160);
   g.setColor(0);
   g.fillRect(0,156,175,175);
   if (!info.qOSTM) {
     g.setColor(4);
-    g.fillRect(6,60,7,9);
+    g.fillRect(6,60,7,90);
     g.fillPoly([6,45,12,60,0,60]);
     g.setColor(7);
     g.drawString("N",2,30);
@@ -205,7 +205,7 @@ function plotTrack(info) {
     osm.draw();
     g.setColor(0);
   }
-  g.drawString(asTime(info.duration),6,156);
+  g.drawString(asTime(info.duration),6,160);
   var f = require("Storage").open(info.filename,"r");
   if (f===undefined) return;
   var l = f.readLine(f);
@@ -238,11 +238,11 @@ function plotTrack(info) {
     oy = mp.y;
     l = f.readLine(f);
   }
-  g.setColor(1);
-  g.fillCircle(ox,oy,5);
+  g.setColor(4);
+  g.fillCircle(ox,oy,3);
   if (info.qOSTM) g.setColor(0);
   else g.setColor(7);
-  g.drawString(require("locale").distance(dist),88,156);
+  g.drawString(require("locale").distance(dist),88,160);
   setWatch(function() {
     viewTrack(info.fn, info);
   }, BTN1);
