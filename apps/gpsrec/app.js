@@ -1,3 +1,4 @@
+Bangle.loadWidgets();
 var settings = require("Storage").readJSON("gpsrec.json",1)||{};
 var osm;
 try { // if it's installed, use the OpenStreetMap module
@@ -98,7 +99,7 @@ function getTrackInfo(fn) {
   var lfactor = Math.cos(minLat*Math.PI/180);
   var ylen = (maxLat-minLat);
   var xlen = (maxLong-minLong)* lfactor;
-  var scale = xlen>ylen ? 200/xlen : 200/ylen;
+  var scale = xlen>ylen ? 150/xlen : 150/ylen;
   return {
     fn : fn,
     filename : filename,
@@ -176,8 +177,8 @@ function plotTrack(info) {
     getMapXY = osm.latLonToXY.bind(osm);
   } else {
     getMapXY = function(lat, lon) { "ram"
-      var ix = 30 + Math.round((long - info.minLong)*info.lfactor*info.scale);
-      var iy = 210 - Math.round((lat - info.minLat)*info.scale);
+      var ix = 20 + Math.round((long - info.minLong)*info.lfactor*info.scale);
+      var iy = 156 - Math.round((lat - info.minLat)*info.scale);
       return {x:ix, y:iy};
     }
   }
@@ -186,25 +187,25 @@ function plotTrack(info) {
   var s = require("Storage");
   var cx = g.getWidth()/2;
   var cy = g.getHeight()/2;
-  g.setColor(1,0.5,0.5);
+  g.setColor(7);
   g.setFont("Vector",16);
-  g.drawString("Track"+info.fn.toString()+" - Loading",10,220);
-  g.setColor(0,0,0);
-  g.fillRect(0,220,239,239);
+  g.drawString("Track"+info.fn.toString()+" - Loading",10,156);
+  g.setColor(0);
+  g.fillRect(0,156,175,175);
   if (!info.qOSTM) {
-    g.setColor(1, 0, 0);
-    g.fillRect(9,80,11,120);
-    g.fillPoly([9,60,19,80,0,80]);
-    g.setColor(1,1,1);
-    g.drawString("N",2,40);
-    g.setColor(1,1,1);
+    g.setColor(4);
+    g.fillRect(6,60,7,9);
+    g.fillPoly([6,45,12,60,0,60]);
+    g.setColor(7);
+    g.drawString("N",2,30);
+    g.setColor(7);
   } else {
     osm.lat = (info.minLat+info.maxLat)/2;
     osm.lon = (info.minLong+info.maxLong)/2;
     osm.draw();
-    g.setColor(0, 0, 0);
+    g.setColor(0);
   }
-  g.drawString(asTime(info.duration),10,220);
+  g.drawString(asTime(info.duration),6,156);
   var f = require("Storage").open(info.filename,"r");
   if (f===undefined) return;
   var l = f.readLine(f);
@@ -217,8 +218,8 @@ function plotTrack(info) {
   var long = +c[2];
   var mp = getMapXY(lat, long);
   g.moveTo(mp.x,mp.y);
-  g.setColor(0,1,0);
-  g.fillCircle(mp.x,mp.y,5);
+  g.setColor(2);
+  g.fillCircle(mp.x,mp.y,3);
   if (info.qOSTM) g.setColor(1,0,0.55);
   else g.setColor(1,1,1);
   l = f.readLine(f);
@@ -237,17 +238,14 @@ function plotTrack(info) {
     oy = mp.y;
     l = f.readLine(f);
   }
-  g.setColor(1,0,0);
+  g.setColor(1);
   g.fillCircle(ox,oy,5);
-  if (info.qOSTM) g.setColor(0, 0, 0);
-  else g.setColor(1,1,1);
-  g.drawString(require("locale").distance(dist),120,220);
-  g.setFont("6x8",2);
-  g.setFontAlign(0,0,3);
-  g.drawString("Back",230,200);
+  if (info.qOSTM) g.setColor(0);
+  else g.setColor(7);
+  g.drawString(require("locale").distance(dist),88,156);
   setWatch(function() {
     viewTrack(info.fn, info);
-  }, BTN3);
+  }, BTN1);
   g.flip();
 }
 
@@ -256,8 +254,8 @@ function plotGraph(info, style) {
   E.showMenu(); // remove menu
   E.showMessage("Calculating...","GPS Track "+info.fn);
   var filename = getFN(info.fn);
-  var infn = new Float32Array(200);
-  var infc = new Uint16Array(200);
+  var infn = new Float32Array(150);
+  var infc = new Uint16Array(150);
   var title;
   var lt = 0; // last time
   var tn = 0; // count for each time period
@@ -274,7 +272,7 @@ function plotGraph(info, style) {
     title = "Altitude (m)";
     while(l!==undefined) {
       ++nl;c=l.split(",");
-      i = Math.round(200*(c[0]/1000 - strt)/dur);
+      i = Math.round(150*(c[0]/1000 - strt)/dur);
       infn[i]+=+c[3];
       infc[i]++;
       l = f.readLine(f);
@@ -285,7 +283,7 @@ function plotGraph(info, style) {
     var t,dx,dy,d,lt = c[0]/1000;
     while(l!==undefined) {
       ++nl;c=l.split(",");
-      i = Math.round(200*(c[0]/1000 - strt)/dur);
+      i = Math.round(150*(c[0]/1000 - strt)/dur);
       t = c[0]/1000;
       p = Bangle.project({lat:c[1],lon:c[2]});
       dx = p.x-lp.x;
@@ -325,12 +323,9 @@ function plotGraph(info, style) {
     title: title,
     xlabel : x=>Math.round(x*dur/(60*infn.length))+" min" // minutes
   });
-  g.setFont("6x8",2);
-  g.setFontAlign(0,0,3);
-  g.drawString("Back",230,200);
   setWatch(function() {
     viewTrack(info.fn, info);
-  }, BTN3);
+  }, BTN1);
   g.flip();
 }
 
