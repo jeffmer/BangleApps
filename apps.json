@@ -94,7 +94,7 @@
           {"name":"gpsrec.img","url":"app-icon.js","evaluate":true},
           {"name":"gpsrec.wid.js","url":"widget.js"},
           {"name":"gpsrec.settings.js","url":"settings.js"},
-          {"name":"graph","url":"graph.min.js"},
+          {"name":"graph","url":"graph.min.js"}
         ],
         "data": [
           {"name":"gpsrec.json"},
