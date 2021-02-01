@@ -278,7 +278,7 @@ function plotGraph(info, style) {
       l = f.readLine(f);
     }
   } else if (style=="speed") {
-    title = "Speed (m/s)";
+    title = "Speed (mph)";
     var p,lp = Bangle.project({lat:c[1],lon:c[2]});
     var t,dx,dy,d,lt = c[0]/1000;
     while(l!==undefined) {
@@ -289,8 +289,8 @@ function plotGraph(info, style) {
       dx = p.x-lp.x;
       dy = p.y-lp.y;
       d = Math.sqrt(dx*dx+dy*dy);
-      if (t!=lt) {
-        infn[i]+=d / (t-lt); // speed
+      if (t!=lt && d>0.1) {
+        infn[i]+=(d / (t-lt))*2.23694; // speed in mph;
         infc[i]++;
       }
       lp = p;
@@ -300,7 +300,8 @@ function plotGraph(info, style) {
   } else throw new Error("Unknown type");
   var min=100000,max=-100000;
   for (var i=0;i<infn.length;i++) {
-    if (infc[i]>0) infn[i]/=infc[i];
+    if (infc[i]>0) infn[i]/=infc[i]
+    if (i>0) infn[i] = 0.95*infn[i-1]+0.05*infn[i]; //exponential moving average filter
     var n = infn[i];
     if (n>max) max=n;
     if (n<min) min=n;

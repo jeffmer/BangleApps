@@ -1,7 +1,7 @@
 (() => {
   var settings = {};
   var hasFix = false;
-  var fixToggle = false; // toggles once for each reading
+  var firstFix = true; // toggles once for each reading
   var gpsTrack; // file for GPS track
   var periodCtr = 0;
   var gpsOn = false;
@@ -10,22 +10,14 @@
   function draw() {
     if (!settings.recording) return;
     g.reset();
-    g.drawImage(atob("GBgCAAAAAAAAAAQAAAAAAD8AAAAAAP/AAAAAAP/wAAAAAH/8C9AAAB/8L/QAAAfwv/wAAAHS//wAAAAL//gAAAAf/+AAAAAf/4AAAAL//gAAAAD/+DwAAAB/Uf8AAAAfA//AAAACAf/wAAAAAH/0AAAAAB/wAAAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),this.x,this.y);
-    if (hasFix) {
-      g.setColor(2);
-      g.drawImage(fixToggle ? atob("CgoCAAAAA0AAOAAD5AAPwAAAAAAAAAAAAAAAAA==") : atob("CgoCAAABw0AcOAHj5A8PwHwAAvgAB/wABUAAAA=="),this.x,this.y+14);
-    } else {
-      g.setColor(1);
-      if (fixToggle)
-        g.setFont("6x8").drawString("?",this.x,this.y+14);
-    }
+    g.setColor(hasFix?2:4);
+    g.drawImage(atob("GBiBAAAgAABwAAD4AAB8AAA9gAAZwAAD4AAH8AAH8AB5wAA9mAAePAAOPgAGHwACDgAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="),this.x,this.y);
   }
 
   function onGPS(fix) {
     hasFix = fix.fix;
-    fixToggle = !fixToggle;
-    WIDGETS["gpsrec"].draw();
     if (hasFix) {
+      if (firstFix) {WIDGETS["gpsrec"].draw(); firstFix=false;}
       periodCtr--;
       if (periodCtr<=0) {
         periodCtr = settings.period;
