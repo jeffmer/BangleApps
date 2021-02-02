@@ -1,7 +1,9 @@
+var loc = require("locale");
 const Ypos = 30;
 
 const labels = ["N","NE","E","SE","S","SW","W","NW"];
-var brg=null;
+var brg=0;
+var wpindex=0;
 
 function drawCompass(course) {
   g.clearRect(0,Ypos,175,Ypos+50)
@@ -93,7 +95,7 @@ function drawN(){
   g.setColor(7);
   g.setFont("6x8",1);
   g.drawString(txt.substring(txt.length-3),160,Ypos+80);
-  g.setFont("Vector",36);
+  g.setFont("Vector",32);
   var cs = course.toString();
   cs = course<10?"00"+cs : course<100 ?"0"+cs : cs;
   g.drawString(cs+"\xB0",6,Ypos+60);
@@ -102,10 +104,10 @@ function drawN(){
   var bs = brg.toString();
   bs = brg<10?"00"+bs : brg<100 ?"0"+bs : bs;
   g.setColor(3);
-  g.drawString("Brg: "+bs+"\xB0",6,Ypos+95);
-  g.drawString("Dist: "+loc.distance(dist),6,115);
-  g.setColor(selected?1:2);
-  g.drawString(wp.name,105,Ypos+95);
+  g.drawString("Brg: "+bs+"\xB0",6,Ypos+90);
+  g.drawString("Dist: "+loc.distance(dist),6,Ypos+115);
+  g.setColor(selected?3:7);
+  g.drawString(wp.name,105,Ypos+110);
   g.setColor(7);
   g.setFont("6x8",1);
   g.drawString("Sats " + satellites.toString(),10,166,true); 
@@ -177,14 +179,6 @@ var SCREENACCESS = {
       }
 } 
  
-Bangle.on('lcdPower',function(on) {
-  if (!SCREENACCESS.withApp) return;
-  if (on) {
-    startdraw();
-  } else {
-    stopdraw();
-  }
-});
 
 var waypoints = require("Storage").readJSON("waypoints.json")||[{name:"NONE"}];
 wp=waypoints[0];
@@ -198,6 +192,11 @@ function nextwp(inc){
   drawN();
 }
 
+Bangle.on('swipe',(dir)=>{
+  if (SCREENACCESS.withApp)
+    nextwp(dir);
+});
+
 function doselect(){
   if (selected && wpindex!=0 && waypoints[wpindex].lat===undefined && savedfix.fix) {
      waypoints[wpindex] ={name:"@"+wp.name, lat:savedfix.lat, lon:savedfix.lon};
@@ -207,6 +206,8 @@ function doselect(){
   selected=!selected;
   drawN();
 }
+
+Bangle.on("kill",function(){Bangle.setGPSPower(0);})
 
 g.clear();
 Bangle.loadWidgets();
