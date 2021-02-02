@@ -1,52 +1,42 @@
-const Yoff = 40;
-var pal2color = new Uint16Array([0x0000,0xffff,0x07ff,0xC618],0,2);
-var buf = Graphics.createArrayBuffer(240,50,2,{msb:true});
-var candraw = true;
+const Ypos = 30;
 
-function flip(b,y) {
- g.drawImage({width:240,height:50,bpp:2,buffer:b.buffer, palette:pal2color},0,y);
- b.clear();
-}
-
-var brg=0;
-var wpindex=0;
 const labels = ["N","NE","E","SE","S","SW","W","NW"];
-var loc = require("locale");
+var brg=null;
 
 function drawCompass(course) {
-  if (!candraw) return;
-  buf.setColor(1);
-  buf.setFont("Vector",24);
+  g.clearRect(0,Ypos,175,Ypos+50)
+  g.setColor(7);
+  g.setFont("Vector",18);
   var start = course-90;
   if (start<0) start+=360;
-  buf.fillRect(28,45,212,49);
-  var xpos = 30;
+  g.fillRect(16,Ypos+45,160,Ypos+49);
+  var xpos = 16;
   var frag = 15 - start%15;
-  if (frag<15) xpos+=frag; else frag = 0;
+  if (frag<15) xpos+=Math.floor((frag*4)/5); else frag = 0;
   for (var i=frag;i<=180-frag;i+=15){
     var res = start + i;
     if (res%90==0) {
-      buf.drawString(labels[Math.floor(res/45)%8],xpos-8,0);
-      buf.fillRect(xpos-2,25,xpos+2,45);
+      g.drawString(labels[Math.floor(res/45)%8],xpos-6,Ypos+6);
+      g.fillRect(xpos-2,Ypos+25,xpos+2,Ypos+45);
     } else if (res%45==0) {
-      buf.drawString(labels[Math.floor(res/45)%8],xpos-12,0);
-      buf.fillRect(xpos-2,30,xpos+2,45);
+      g.drawString(labels[Math.floor(res/45)%8],xpos-9,Ypos+6);
+      g.fillRect(xpos-2,Ypos+30,xpos+2,Ypos+45);
     } else if (res%15==0) {
-      buf.fillRect(xpos,35,xpos+1,45);
+      g.fillRect(xpos,Ypos+35,xpos+1,Ypos+45);
     }
-    xpos+=15;
+    xpos+=12;
   }
-  if (wpindex!=0) {
+  if (brg) {
     var bpos = brg - course;
     if (bpos>180) bpos -=360;
     if (bpos<-180) bpos +=360;
-    bpos+=120;
-    if (bpos<30) bpos = 14;
-    if (bpos>210) bpos = 226;
-    buf.setColor(2);
-    buf.fillCircle(bpos,40,8);
+    bpos= Math.floor((bpos*4)/5)+88;
+    if (bpos<16) bpos = 8;
+    if (bpos>160) bpos = 170;
+    g.setColor(3);
+    g.fillCircle(bpos,Ypos+45,6);
     }
-  flip(buf,Yoff);
+    g.flip();
 }
 
 //displayed heading
@@ -96,36 +86,30 @@ function distance(a,b){
 var selected = false;
 
 function drawN(){
+  g.clearRect(0,Ypos+50,175,175);
+  g.setColor(4);
+  g.fillPoly([88,Ypos+50,78,Ypos+70,98,Ypos+70]);
   var txt = loc.speed(speed);
-  buf.setColor(1);
-  buf.setFont("6x8",2);
-  buf.drawString("o",100,0);
-  buf.setFont("6x8",1);
-  buf.drawString(txt.substring(txt.length-3),220,40);
-  buf.setFont("Vector",48);
+  g.setColor(7);
+  g.setFont("6x8",1);
+  g.drawString(txt.substring(txt.length-3),160,Ypos+80);
+  g.setFont("Vector",36);
   var cs = course.toString();
   cs = course<10?"00"+cs : course<100 ?"0"+cs : cs;
-  buf.drawString(cs,10,0);
-  buf.drawString(txt.substring(0,txt.length-3),140,4);
-  flip(buf,Yoff+70);
-  buf.setColor(1);
-  buf.setFont("Vector",24);
+  g.drawString(cs+"\xB0",6,Ypos+60);
+  g.drawString(txt.substring(0,txt.length-3),105,Ypos+60);
+  g.setFont("Vector",18);
   var bs = brg.toString();
   bs = brg<10?"00"+bs : brg<100 ?"0"+bs : bs;
-  buf.setColor(3);
-  buf.drawString("Brg: ",0,0);
-  buf.drawString("Dist: ",0,30);
-  buf.setColor(selected?1:2);
-  buf.drawString(wp.name,140,0);
-  buf.setColor(1);
-  buf.drawString(bs,60,0);
-  buf.drawString(loc.distance(dist),60,30);
-  flip(buf,Yoff+130);
+  g.setColor(3);
+  g.drawString("Brg: "+bs+"\xB0",6,Ypos+95);
+  g.drawString("Dist: "+loc.distance(dist),6,115);
+  g.setColor(selected?1:2);
+  g.drawString(wp.name,105,Ypos+95);
+  g.setColor(7);
   g.setFont("6x8",1);
-  g.setColor(0,0,0);
-  g.fillRect(10,230,60,239);
-  g.setColor(1,1,1);
-  g.drawString("Sats " + satellites.toString(),10,230);     
+  g.drawString("Sats " + satellites.toString(),10,166,true); 
+  g.flip();    
 }
 
 var savedfix;
@@ -164,9 +148,6 @@ function startTimers() {
 }
 
 function drawAll(){
-  g.setColor(1,0.5,0.5);
-  g.fillPoly([120,Yoff+50,110,Yoff+70,130,Yoff+70]);
-  g.setColor(1,1,1);
   drawN();
   drawCompass(heading);
 }
@@ -179,9 +160,7 @@ function startdraw(){
 }
 
 function setButtons(){
-  setWatch(nextwp.bind(null,-1), BTN1, {repeat:true,edge:"falling"});
-  setWatch(doselect, BTN2, {repeat:true,edge:"falling"});
-  setWatch(nextwp.bind(null,1), BTN3, {repeat:true,edge:"falling"});
+  setWatch(doselect, BTN1, {repeat:true,edge:"falling"});
 }
 
 var SCREENACCESS = {
@@ -230,7 +209,6 @@ function doselect(){
 }
 
 g.clear();
-Bangle.setLCDBrightness(1);
 Bangle.loadWidgets();
 Bangle.drawWidgets();
 // load widgets can turn off GPS
