@@ -301,7 +301,7 @@ function plotGraph(info, style) {
   var min=100000,max=-100000;
   for (var i=0;i<infn.length;i++) {
     if (infc[i]>0) infn[i]/=infc[i]
-    if (i>0) infn[i] = 0.95*infn[i-1]+0.05*infn[i]; //exponential moving average filter
+    if (i>0) infn[i] = 0.90*infn[i-1]+0.10*infn[i]; //exponential moving average filter
     var n = infn[i];
     if (n>max) max=n;
     if (n<min) min=n;

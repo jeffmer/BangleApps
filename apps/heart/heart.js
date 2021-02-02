@@ -1,7 +1,9 @@
  
 /* Low pass, high pass and AGC filters adapted from Daniel Thompson's waspos heartrate module
-   update for E7028
+   update for VC31 on SAMQ3
 */
+
+// NOTE YET WORKING
 
 /*
 var correlator = E.compiledC(`
@@ -251,37 +253,52 @@ var pulseDetector = (function(){
   };
 })();
 
+var hri2c = new I2C();
+hri2c.setup({scl:D32,sda:D24});
 
-I2C1.setup({scl:D20,sda:D22,bitrate:100000});
-
-// EM7028 version
+// VC31 version
 var HRS = {
   writeByte:(a,d) => { 
-      I2C1.writeTo(0x24,a,d);
+      hri2c.writeTo(0x33,a,d);
   }, 
   readByte:(a) => {
-      I2C1.writeTo(0x24, a);
-      return I2C1.readFrom(0x24,1)[0]; 
+      hri2c.writeTo(0x33, a);
+      return hri2c.readFrom(0x44,1)[0]; 
   },
   enable:() => {
-    D14.set();
-    setTimeout(()=>{
-      HRS.writeByte( 0x01, 0x08 );  //continuous
-      HRS.writeByte( 0x08, 0x00 );
-      HRS.writeByte( 0x0A, 0x7F );	
-      HRS.writeByte( 0x0D, 0xCF );
-      HRS.writeByte( 0x0E, 0x06 );
-    },100);
+    HRS.writeByte( 0x17, 0x10 );
+    HRS.writeByte( 0x16, 0x78 );
+    HRS.writeByte( 0x01, 0xe0 );	
+    HRS.writeByte( 0x0c, 0x6e );
   },
   disable:() => {
-    HRS.writeByte( 0x01, 0x00 );
-    HRS.writeByte( 0x0D, 0x00 );
-    D14.reset();
+    HRS.writeByte( 0x01, 0x08 );
+    HRS.writeByte( 0x02, 0x80 );
+    HRS.writeByte( 0x0c, 0x4e );
+    
+    HRS.writeByte( 0x16, 0x88 );
+    
+    HRS.writeByte( 0x0c, 0x22 );
+    HRS.writeByte( 0x01, 0xf0 );
+    HRS.writeByte( 0x0c, 0x02 );
+  
+    HRS.writeByte( 0x0c, 0x22 );
+    HRS.writeByte( 0x01, 0xf0 );
+    HRS.writeByte( 0x0c, 0x02 );
+    
+    HRS.writeByte( 0x0c, 0x22 );
+    HRS.writeByte( 0x01, 0xf0 );
+    HRS.writeByte( 0x0c, 0x02 );
+    
+    HRS.writeByte( 0x0c, 0x22 );
+    HRS.writeByte( 0x01, 0xf0 );
+    HRS.writeByte( 0x0c, 0x02 );
   },
-  read:()=>{  //HRS1 - continuous
-      var h = HRS.readByte(0x31);
-      var l = HRS.readByte(0x30);
-      return (h<<8)| l; //16 bit
+  read:()=>{
+      var m = HRS.readByte(0x09);
+      var h = HRS.readByte(0x0A);
+      var l = HRS.readByte(0x0F);
+      return(m<<8)|((h&0x0F)<<4)|(l&0x0F); //16 bit
   },
 };
 
