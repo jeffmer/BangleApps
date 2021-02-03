@@ -6,6 +6,7 @@ var brg=null;
 
 function drawCompass(course) {
   g.setColor(7);
+  "ram"
   g.setFont("Vector",18);
   var start = course-90;
   if (start<0) start+=360;
@@ -54,6 +55,7 @@ var candraw = false;
 var CALIBDATA = require("Storage").readJSON("magnav.json",1)||null;
 
 function tiltfixread(O,S){
+  "ram"
   var start = Date.now();
   var m = Bangle.getCompass();
   var g = Bangle.getAccel();
@@ -73,6 +75,7 @@ function tiltfixread(O,S){
 
 // Note actual mag is 360-m, error in firmware
 function reading() {
+  "ram"
   g.clearRect(0,24,175,175);
   var d = tiltfixread(CALIBDATA.offset,CALIBDATA.scale);
   heading = newHeading(d,heading);
