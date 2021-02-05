@@ -138,6 +138,18 @@
           {"name":"widram.wid.js","url":"widget.js"}
         ]
       },
+      { "id": "widtch",
+        "name": "Touch Lock Widget",
+        "shortName":"Touch Lock",
+        "icon": "widget.png",
+        "version":"0.01",
+        "description": "Disables touch after 30 seconds - saves power. Re-enable by twist",
+        "tags": "widget",
+        "type": "widget",
+        "storage": [
+          {"name":"widram.wid.js","url":"widget.js"}
+        ]
+      },
       { "id": "widmp",
         "name": "Moon Phase Widget",
         "icon": "widget.png",
