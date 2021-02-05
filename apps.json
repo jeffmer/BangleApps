@@ -147,7 +147,7 @@
         "tags": "widget",
         "type": "widget",
         "storage": [
-          {"name":"widram.wid.js","url":"widget.js"}
+          {"name":"widtch.wid.js","url":"widget.js"}
         ]
       },
       { "id": "widmp",
