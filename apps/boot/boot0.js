@@ -53,9 +53,11 @@ if (!Bangle.F_BEEPSET) {
 if (s.timeout!==undefined) Bangle.setLCDTimeout(s.timeout);
 if (!s.timeout) Bangle.setLCDPower(1);
 LED1.reset();
+var twTO;
 Bangle.on('twist',function(){
   LED1.set();
-  setTimeout(function(){LED1.reset();},5000);
+  if (twTO) clearTimeout(twTO);
+  twTO = setTimeout(function(){LED1.reset();},5000);
 });
 E.setTimeZone(s.timezone);
 delete s;

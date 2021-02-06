@@ -115,6 +115,17 @@
           {"name":"gpsnav.img","url":"app-icon.js","evaluate":true}
         ]
       },
+      { "id": "slevel",
+        "name": "Spirit Level",
+        "icon": "spiritlevel.png",
+        "version":"0.01",
+        "description": "Show the current angle of the watch, so you can use it to make sure something is absolutely flat",
+        "tags": "tool",
+        "storage": [
+          {"name":"slevel.app.js","url":"spiritlevel.js"},
+          {"name":"slevel.img","url":"spiritlevel-icon.js","evaluate":true}
+        ]
+      },
       { "id": "widbat",
         "name": "Battery Level Widget",
         "icon": "widget.png",
