@@ -7,6 +7,7 @@ var face = FACES[iface]();
 var intervalRefSec;
 
 function stopdraw() {
+  if (face.kill) face.kill();
   if(intervalRefSec) {intervalRefSec=clearInterval(intervalRefSec);}
   g.clear();
 }
@@ -16,7 +17,7 @@ function startdraw() {
   g.reset();
   Bangle.drawWidgets();
   face.init();
-  intervalRefSec = setInterval(face.tick,1000);
+  if (face.tick) intervalRefSec = setInterval(face.tick,1000);
 }
 
 global.SCREENACCESS = {

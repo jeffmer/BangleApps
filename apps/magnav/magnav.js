@@ -5,8 +5,8 @@ const labels = ["N","NE","E","SE","S","SW","W","NW"];
 var brg=null;
 
 function drawCompass(course) {
-  g.setColor(7);
   "ram"
+  g.setColor(7);
   g.setFont("Vector",18);
   var start = course-90;
   if (start<0) start+=360;
@@ -56,7 +56,6 @@ var CALIBDATA = require("Storage").readJSON("magnav.json",1)||null;
 
 function tiltfixread(O,S){
   "ram"
-  var start = Date.now();
   var m = Bangle.getCompass();
   var g = Bangle.getAccel();
   m.dx =(m.x-O.x)*S.x; m.dy=(m.y-O.y)*S.y; m.dz=(m.z-O.z)*S.z;
