@@ -97,7 +97,7 @@
 
     function stopdraw() {
         Bangle.setCompassPower(0);
-        if(intervalRef) {clearInterval(intervalRef);}
+        if(intervalRef) {intervalRef=clearInterval(intervalRef);}
     }
 
     return {init:startdraw, kill:stopdraw};

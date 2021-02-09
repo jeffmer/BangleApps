@@ -1,4 +1,8 @@
 var loc = require("locale");
+loc.speed = function(){ 
+  var s = (speed/1.60934);
+  return s.toFixed(s<10?1:0)+"mph";
+}
 const Ypos = 30;
 
 const labels = ["N","NE","E","SE","S","SW","W","NW"];
@@ -6,7 +10,7 @@ var brg=0;
 var wpindex=0;
 
 function drawCompass(course) {
-  g.clearRect(0,Ypos,175,Ypos+50)
+  g.clearRect(0,Ypos,175,Ypos+50);
   g.setColor(7);
   g.setFont("Vector",18);
   var start = course-90;
@@ -94,7 +98,7 @@ function drawN(){
   var txt = loc.speed(speed);
   g.setColor(7);
   g.setFont("6x8",1);
-  g.drawString(txt.substring(txt.length-3),160,Ypos+80);
+  g.drawString(txt.substring(txt.length-3),155,Ypos+80);
   g.setFont("Vector",32);
   var cs = course.toString();
   cs = course<10?"00"+cs : course<100 ?"0"+cs : cs;
@@ -179,9 +183,9 @@ var SCREENACCESS = {
       }
 } 
  
-
 var waypoints = require("Storage").readJSON("waypoints.json")||[{name:"NONE"}];
 wp=waypoints[0];
+if (wp.select) wp = waypoints[wp.select];
 
 function nextwp(inc){
   if (!selected) return;
@@ -203,6 +207,8 @@ function doselect(){
      wp = waypoints[wpindex];
      require("Storage").writeJSON("waypoints.json", waypoints);
   }
+  waypoints[0].select=wpindex;
+  require("Storage").writeJSON("waypoints.json", waypoints);
   selected=!selected;
   drawN();
 }
