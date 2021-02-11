@@ -225,9 +225,9 @@ function showLCDMenu() {
       value: settings.brightness,
       min: 0,
       max: 1,
-      step: 1,
+      step: 0.2,
       onchange: v => {
-        settings.brightness = v || 1;
+        settings.brightness = v;
         updateSettings();
         Bangle.setLCDBrightness(settings.brightness);
       }
