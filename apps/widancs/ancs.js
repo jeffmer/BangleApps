@@ -64,8 +64,8 @@
       }
       drawIcon(1); //connect from iPhone
       state.gatt.device.on('gattserverdisconnected', function(reason) {
-         if (ival) clearInterval(ival);
-         if (tval) clearTimeout(tval); 
+         if (ival) ival = clearInterval(ival);
+         if (tval) tval = clearTimeout(tval); 
         cleanup();
       });
       E.on("kill",function(){
@@ -73,16 +73,16 @@
       });      
       NRF.setSecurity({passkey:"123456",mitm:1,display:1});
       tval = setTimeout(function(){
-          if (ival) clearInterval(ival);
+          if (ival) ival = clearInterval(ival);
           state.gatt.disconnect().then(cleanup);
       },10000);        
       state.gatt.startBonding().then(function(){
         ival = setInterval(function(){
             var sec = state.gatt.getSecurityStatus();
-            if (!sec.connected) {clearInterval(ival); clearTimeout(tval); return;}
+            if (!sec.connected) {ival = clearInterval(ival); tval = clearTimeout(tval); return;}
             if (sec.connected && sec.encrypted){
-              clearInterval(ival);  
-              clearTimeout(tval);
+              ival = clearInterval(ival);  
+              tval = clearTimeout(tval);
               drawIcon(2); //bonded to iPhone
               do_ancs(); 
               return;
