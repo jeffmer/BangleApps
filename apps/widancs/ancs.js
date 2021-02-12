@@ -187,6 +187,7 @@
     if (screentimeout) clearTimeout(screentimeout);
     SCREENACCESS.request();
     Bangle.buzz();
+    Bangle.setLCDPower(1);
     if (state.current.cat!=1){
       E.showAlert(message,title).then(send_action.bind(null,false));
     } else {
