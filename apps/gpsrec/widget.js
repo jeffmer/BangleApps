@@ -1,7 +1,7 @@
 (() => {
   var settings = {};
   var hasFix = false;
-  var firstFix = true; // toggles once for each reading
+  var lastFix = false; // toggles once for each reading
   var gpsTrack; // file for GPS track
   var periodCtr = 0;
   var gpsOn = false;
@@ -16,8 +16,8 @@
 
   function onGPS(fix) {
     hasFix = fix.fix;
+    if (lastFix!=hasFix) {WIDGETS["gpsrec"].draw(); lastFix=hasFix;}
     if (hasFix) {
-      if (firstFix) {WIDGETS["gpsrec"].draw(); firstFix=false;}
       periodCtr--;
       if (periodCtr<=0) {
         periodCtr = settings.period;

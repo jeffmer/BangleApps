@@ -150,7 +150,7 @@
 
   function saveLast(mm){
     LAST.unshift(mm);
-    if (LAST.length>3) LAST.pop();
+    if (LAST.length>6) LAST.pop();
   }
   
   function release_screen(){
@@ -207,7 +207,7 @@
     if (ct == 1) { // it's a call so pre-empt
         if (inalert) {state.notqueue.push(state.current); inalert=false;}
         state.notqueue.push({cat:ct, uid:id});
-    } else if (len<16)
+    } else if (len<32)
         state.notqueue[len] = {cat:ct, uid:id};
     notifyTO = setTimeout(next_notify,1000);
   }
