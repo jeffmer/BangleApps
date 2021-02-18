@@ -38,6 +38,41 @@ There is only one button = ```BTN1```.
 
 The simulated buttons in the official Espruino repository for the SMAQ3 are not supported.
 
+## Screenshots
+Some pictures of apps running on the SMAQ3:
+
+![Launcher App](images/launcher.jpg)
+
+Launcher App
+
+![](images/clock.jpg)
+
+Multilock App -  Clock face
+
+![](images/pressure.jpg)
+
+Multilock App -  BMP280 face
+
+![](images/menu.jpg)
+
+GPS Recorder App -  Menu
+
+![](images/track.jpg)
+
+GPS Recorder App -  Track display
+
+Note that the red padlock icon means that the screen is locked i.e. touch disabled. On the Bangle this would be display off, however, with an always on display, we simply disable touch to save power. Enabling is controlled by the usual LCD Power On settings e.g. button press.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
