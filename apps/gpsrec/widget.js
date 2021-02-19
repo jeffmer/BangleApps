@@ -16,7 +16,7 @@
 
   function onGPS(fix) {
     hasFix = fix.fix;
-    if (lastFix!=hasFix) {WIDGETS["gpsrec"].draw(); lastFix=hasFix;}
+    if (lastFix!=hasFix) {WIDGETS["gpsrec"].draw(); lastFix=hasFix; g.flip();}
     if (hasFix) {
       periodCtr--;
       if (periodCtr<=0) {

@@ -244,6 +244,7 @@
   function drawIcon(id){
     stage = id;
     WIDGETS["ancs"].draw();
+    g.flip();
   }
   
   if (ENABLED && typeof SCREENACCESS!='undefined') {
