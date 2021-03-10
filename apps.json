@@ -43,7 +43,7 @@
     { "id": "multiclock",
         "name": "Multi Clock",
         "icon": "multiclock.png",
-        "version":"0.11",
+        "version":"0.12",
         "description": "Clock with multiple faces - Big, Analogue, Digital, Text, Time-Date.\n Switch between faces with BTN1 & BTN3",
         "readme": "README.md",
         "tags": "clock",
@@ -52,6 +52,7 @@
         "storage": [
           {"name":"multiclock.app.js","url":"clock.js"},
           {"name":"big.face.js","url":"big.js"},
+          {"name":"fnt36x70.js","url":"fnt36x70.js"},
           {"name":"ana.face.js","url":"ana.js"},
           {"name":"txt.face.js","url":"txt.js"},
           {"name":"timdat.face.js","url":"timdat.js"},

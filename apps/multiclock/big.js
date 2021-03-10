@@ -2,6 +2,11 @@
 
     function getFace(){
 
+    function setClockFont(g,name){
+        var s=require("Storage");
+        g.setFontCustom(s.read("fnt"+name+".bin"),0x30,s.read("fnt"+name+".wdt"),70);
+    }
+
     function drawTime(d) {
         g.reset();
         var da = d.toString().split(" ");
@@ -11,7 +16,8 @@
         g.clearRect(0,24,175,175);
         g.setColor(7);
         g.setFontAlign(0,-1);
-        g.setFont("Vector",90);
+        //g.setFont("Vector",90);
+        setClockFont(g,"36x70");
         g.drawString(hours,88,24,true);
         g.drawString(minutes,88,100,true);
         g.flip();
