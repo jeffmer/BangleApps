@@ -1,5 +1,10 @@
 (() => {
     function getFace(){
+
+      function setClockFont(g,name){
+        var s=require("Storage");
+        g.setFontCustom(s.read("fnt"+name+".bin"),0x30,s.read("fnt"+name+".wdt"),70);
+      }
         
         var lastmin=-1;
         function drawClock(){
@@ -15,7 +20,8 @@
           g.clearRect(0,24,175,175);
           var w=g.getWidth();
           g.setColor(7);
-          g.setFontVector(62);
+          //g.setFontVector(62);
+          setClockFont(g,"36x70"); 
           g.drawString(tm,4+(w-g.stringWidth(tm))/2,50);
           g.setFontVector(28);
           g.setColor(3);

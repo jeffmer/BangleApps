@@ -6,7 +6,7 @@ var iface = lastface.pinned;
 var face = FACES[iface]();
 var intervalRefSec;
 
-if (STOR.read("fnt36x70")) eval(STOR.read("fnt36x70"));
+if (STOR.read("fnt36x70.js")) eval(STOR.read("fnt36x70.js"));
 
 function stopdraw() {
   if (face.kill) face.kill();
