@@ -22,13 +22,18 @@
        if (t.getSeconds() === 0) Bangle.getPressure().then(drawPressure);
     }
 
+    var initTO;
+
     function startDraw(){
        Bangle.setBarometerPower(1);
        Bangle.getPressure().then(drawPressure);
+       //takes a little time to settledown ao
+       initTO = setTimeout(()=> Bangle.getPressure().then(drawPressure),5000);
     }
 
     function stopDraw(){
         Bangle.setBarometerPower(0);
+        if (initTO) initTO = clearTimeout(initTO);
      }
 
     return {init:startDraw, tick:onSecond, kill:stopDraw};

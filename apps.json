@@ -58,6 +58,7 @@
           {"name":"timdat.face.js","url":"timdat.js"},
           {"name":"mag.face.js","url":"mag.js"},
           {"name":"gps.face.js","url":"gps.js"},
+          {"name":"press.face.js","url":"press.js"},
           {"name":"multiclock.img","url":"multiclock-icon.js","evaluate":true}
         ]
       },
