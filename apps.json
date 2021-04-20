@@ -52,6 +52,7 @@
         "storage": [
           {"name":"multiclock.app.js","url":"clock.js"},
           {"name":"big.face.js","url":"big.js"},
+          {"name":"fnt36x70.js","url":"fnt36x70.js"},
           {"name":"ana.face.js","url":"ana.js"},
           {"name":"txt.face.js","url":"txt.js"},
           {"name":"timdat.face.js","url":"timdat.js"},
